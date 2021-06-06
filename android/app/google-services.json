@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "69749804611",
+    "project_id": "muon-9acf3",
+    "storage_bucket": "muon-9acf3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69749804611:android:c731bd80a159970fa70ef6",
+        "android_client_info": {
+          "package_name": "com.example.muon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69749804611-f2io1t7gvur124k4e0o1e2pjkn4jrn1d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.muon",
+            "certificate_hash": "bc3d9395e28a8ba4a1a84f37aca94679347c34de"
+          }
+        },
+        {
+          "client_id": "69749804611-gc8ogpi717jllm24o0a0sh40lk33poht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh1bUeerm2YV7IXsrQxUiUo7_K0avDjQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69749804611-gc8ogpi717jllm24o0a0sh40lk33poht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

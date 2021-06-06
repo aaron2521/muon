@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muon/login_page.dart';
 import 'package:muon/splash_screen.dart';
 
 void main() {
@@ -10,8 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Color(0xff78CFBA)
+      ),
         debugShowCheckedModeBanner: false,
-        home: SplashScreen()
+        home: LoginPage()
     );
   }
 }
