@@ -1,20 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:muon/sign_up.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpState extends State<SignUp> {
+
   final email = TextEditingController();
   final pass = TextEditingController();
+  final name = TextEditingController();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,32 +24,23 @@ class _LoginPageState extends State<LoginPage> {
       body: SingleChildScrollView(
         child: Column(children: [
           SizedBox(
-            height: 40,
+            height: 30,
           ),
           Center(
             child: Container(
                 child: Image(
-              image: AssetImage("images/logo.png"),
-            )),
+                  image: AssetImage("images/logo.png"),
+                )),
           ),
           RichText(
             text: TextSpan(
-                text: "Hello, ",
+                text: "Create Account ",
                 style: TextStyle(
-                  fontSize: 30.0,
+                  fontSize: 26.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: " Sign in to your Account",
-                    style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xff78CFBA),
-                    ),
-                  )
-                ]),
+            ),
           ),
           SizedBox(
             height: 40,
@@ -61,6 +54,10 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       TextField1(
                           icon: Icons.person,
+                          title: "Name",
+                          titleController: name),
+                      TextField1(
+                          icon: Icons.mail,
                           title: "Email",
                           titleController: email),
                       TextField2(
@@ -74,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 40,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -82,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  "Sign in",
+                  "Create",
                   style: TextStyle(
                     fontSize: 26.0,
                     fontWeight: FontWeight.bold,
@@ -113,36 +110,36 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-          SizedBox(
-            height: 50,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(
-              "Don't have an account?   ",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-              ),
-            ),
-            GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));
-              },
-              child: Container(
-                padding: EdgeInsets.only(bottom: 3),
-                decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(
-                      color: Colors.black,
-                      width: 1.0, // This would be the width of the underline
-                    ))
-                ),
-                child: Text(
-                  "Create",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, )
-                ),
-              ),
-            ),
-          ])
+          // SizedBox(
+          //   height: 50,
+          // ),
+          // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          //   Text(
+          //     "Don't have an account?   ",
+          //     style: TextStyle(
+          //       fontSize: 16,
+          //       color: Colors.black,
+          //     ),
+          //   ),
+          //   GestureDetector(
+          //     onTap: (){
+          //       // Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp()));
+          //     },
+          //     child: Container(
+          //       padding: EdgeInsets.only(bottom: 3),
+          //       decoration: BoxDecoration(
+          //           border: Border(bottom: BorderSide(
+          //             color: Colors.black,
+          //             width: 1.0, // This would be the width of the underline
+          //           ))
+          //       ),
+          //       child: Text(
+          //           "Create",
+          //           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, )
+          //       ),
+          //     ),
+          //   ),
+          // ])
         ]),
       ),
     );
@@ -193,7 +190,7 @@ class TextField1 extends StatelessWidget {
             fillColor: Colors.white,
           ),
           validator: (title) =>
-              title != null && title.isEmpty ? "This cannot be empty" : null,
+          title != null && title.isEmpty ? "This cannot be empty" : null,
           controller: titleController,
         ),
       ),
@@ -245,7 +242,7 @@ class TextField2 extends StatelessWidget {
             fillColor: Colors.white,
           ),
           validator: (title) =>
-              title != null && title.isEmpty ? "This cannot be empty" : null,
+          title != null && title.isEmpty ? "This cannot be empty" : null,
           controller: titleController,
         ),
       ),

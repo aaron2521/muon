@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:muon/login_page.dart';
 import 'package:muon/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // App.sharedPreferences = await SharedPreferences.getInstance();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
