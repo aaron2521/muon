@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:muon/login_page.dart';
 import 'package:muon/main_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -8,6 +10,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
   String type;
   // SharedPreferences sharedPreferences;
 
@@ -17,28 +20,15 @@ class _SplashScreenState extends State<SplashScreen> {
     displaySplash();
   }
   void displaySplash()async{
-    Timer(Duration(seconds: 5),()async{
-      // if(await _googleSignIn.isSignedIn()){
-      //   String type=App.sharedPreferences.getString("type");
-      //   if(type=='seller'){
-      //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>(SellerHome())));
-      //   }
-      //   else if(type=='customer'){
-      //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>(SidebarLayout())));
-      //   }
-      //   else{
-      //     await _googleSignIn.signOut();
-      //     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>(Login())));
-      //     print("something wrong");
-      //   }
-      // }
-      // else{
-      //
-      //   await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>(Login())));
-      //   print("user null");
-      //   print(type);
-      // }
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>(MainPage())));
+    Timer(Duration(seconds: 2),()async{
+      var user = _auth.currentUser;
+
+      if (user != null) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>(MainPage())));
+      } else {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>(LoginPage())));
+      }
+
     });
   }
 

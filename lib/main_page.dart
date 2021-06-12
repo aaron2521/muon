@@ -1,32 +1,30 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:muon/add_photo_page.dart';
 import 'package:muon/home_page.dart';
 import 'package:muon/profile_page.dart';
 
-
 class MainPage extends StatefulWidget {
-  const MainPage({Key key}) : super(key: key);
+  const MainPage({Key key, User user}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-
   int _currentIndex = 0;
-  var _pages = [HomePage(),AddPhotoPage(),ProfilePage()];
+  var _pages = [HomePage(), AddPhotoPage(), ProfilePage()];
   var _pageController = PageController();
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Muon")),
+        title: Align(alignment: Alignment(-0.2, 0), child: Text("Muon")),
       ),
       body: PageView(
         children: _pages,
-        onPageChanged: (index){
+        onPageChanged: (index) {
           setState(() {
             _currentIndex = index;
           });
@@ -42,23 +40,22 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
               title: Text("Home"),
-              backgroundColor: Colors.white
-          ),
+              backgroundColor: Colors.white),
           BottomNavigationBarItem(
               icon: Icon(Icons.add_a_photo_outlined),
               title: Text("Camera"),
-              backgroundColor: Colors.white
-          ),
+              backgroundColor: Colors.white),
           BottomNavigationBarItem(
               icon: Icon(Icons.person_outlined),
               title: Text("Profile"),
-              backgroundColor: Colors.white
-          ),
+              backgroundColor: Colors.white),
         ],
-        onTap: (index){
+        onTap: (index) {
           setState(() {
             _currentIndex = index;
-            _pageController.animateToPage(_currentIndex, duration: Duration(milliseconds: 100),curve: Curves.fastLinearToSlowEaseIn);
+            _pageController.animateToPage(_currentIndex,
+                duration: Duration(milliseconds: 100),
+                curve: Curves.fastLinearToSlowEaseIn);
           });
         },
       ),

@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Color(0xff78CFBA)
       ),
         debugShowCheckedModeBanner: false,
-        home: LoginPage()
+        home: SplashScreen()
     );
   }
 }

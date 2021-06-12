@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:muon/login_page.dart';
+import 'package:muon/main_page.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key key}) : super(key: key);
@@ -9,7 +11,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-
   final email = TextEditingController();
   final pass = TextEditingController();
   final name = TextEditingController();
@@ -29,17 +30,17 @@ class _SignUpState extends State<SignUp> {
           Center(
             child: Container(
                 child: Image(
-                  image: AssetImage("images/logo.png"),
-                )),
+              image: AssetImage("images/logo.png"),
+            )),
           ),
           RichText(
             text: TextSpan(
-                text: "Create Account ",
-                style: TextStyle(
-                  fontSize: 26.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+              text: "Create Account ",
+              style: TextStyle(
+                fontSize: 26.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
           ),
           SizedBox(
@@ -53,13 +54,17 @@ class _SignUpState extends State<SignUp> {
                   child: Column(
                     children: [
                       TextField1(
-                          icon: Icons.person,
-                          title: "Name",
-                          titleController: name),
+                        icon: Icons.person,
+                        title: "Name",
+                        titleController: name,
+                        message: "Enter an email",
+                      ),
                       TextField1(
-                          icon: Icons.mail,
-                          title: "Email",
-                          titleController: email),
+                        icon: Icons.mail,
+                        title: "Email",
+                        titleController: email,
+                        message: "Enter a nick Name",
+                      ),
                       TextField2(
                           icon: Icons.lock,
                           title: "Password",
@@ -91,19 +96,26 @@ class _SignUpState extends State<SignUp> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 50,
-                    width: 70,
-                    decoration: ShapeDecoration(
-                      color: Color(0xff78CFBA),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(22.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      if (_formKey.currentState.validate()) {
+                        registerAccount();
+                      }
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 70,
+                      decoration: ShapeDecoration(
+                        color: Color(0xff78CFBA),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(22.0),
+                        ),
                       ),
-                    ),
-                    child: Icon(
-                      Icons.arrow_forward_sharp,
-                      color: Colors.white,
-                      size: 30,
+                      child: Icon(
+                        Icons.arrow_forward_sharp,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ),
@@ -144,17 +156,38 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+  void registerAccount() async{
+    try{
+      final User user = (await _auth.createUserWithEmailAndPassword(email: email.text, password: pass.text)).user;
+
+      if(user!=null){
+        if(!user.emailVerified){
+          await user.sendEmailVerification();
+        }
+        await user.updateDisplayName(name.text);
+        final user1 = _auth.currentUser;
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage(user: user1)));
+      }
+    }
+    catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter a valid email"),behavior: SnackBarBehavior.floating,backgroundColor: Color(0xff78CFBA),));
+      print(e);
+    }
+
+  }
 }
 
 class TextField1 extends StatelessWidget {
   final IconData icon;
   final String title;
+  final String message;
   final TextEditingController titleController;
   const TextField1({
     Key key,
     this.icon,
     this.title,
     this.titleController,
+    this.message,
   }) : super(key: key);
 
   @override
@@ -189,8 +222,7 @@ class TextField1 extends StatelessWidget {
             hintText: title,
             fillColor: Colors.white,
           ),
-          validator: (title) =>
-          title != null && title.isEmpty ? "This cannot be empty" : null,
+          validator: (title) => title != null && title.isEmpty ? message : null,
           controller: titleController,
         ),
       ),
@@ -242,7 +274,7 @@ class TextField2 extends StatelessWidget {
             fillColor: Colors.white,
           ),
           validator: (title) =>
-          title != null && title.isEmpty ? "This cannot be empty" : null,
+              title != null && title.length < 6 ? "Enter a valid password" : null,
           controller: titleController,
         ),
       ),
