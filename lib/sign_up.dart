@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:muon/login_page.dart';
@@ -166,7 +167,18 @@ class _SignUpState extends State<SignUp> {
         }
         await user.updateDisplayName(name.text);
         final user1 = _auth.currentUser;
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage(user: user1)));
+        if (_formKey.currentState.validate()) {
+          void register()async{
+              await FirebaseFirestore.instance.collection("Users").doc().set({
+                "name": name.text.trim(),
+                "email": email.text.trim(),
+                "password": pass.text.trim(),
+              }).then((value){
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage(user: user1,)));
+              });
+          }
+          register();
+        }
       }
     }
     catch(e){
